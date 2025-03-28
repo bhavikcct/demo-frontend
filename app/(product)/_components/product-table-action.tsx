@@ -11,7 +11,7 @@ interface Props {
   product: Product;
 }
 export const ProductTableActions = ({ product }: Props) => {
-  const [isPending, startTransition] = useTransition();
+  const [,startTransition] = useTransition();
   const router = useRouter();
 
   const handledelete = (id: string) => {
