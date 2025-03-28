@@ -81,12 +81,11 @@ export async function getAllProducts(): Promise<Product[]> {
     });
     return response.data;
   } catch (error) {
-    if (error instanceof ApiError) {
-      throw new Error(`Failed to fetch products: ${error.message}`, {
-        cause: error,
-      });
+    console.error("Error fetching products:", error);
+    if (process.env.NODE_ENV === "production" && process.env.NEXT_PHASE === "phase-production-build") {
+      return [];
     }
-    throw new Error("Unexpected error while fetching products", {
+    throw new Error(`Failed to fetch products: ${error instanceof ApiError ? error.message : "Unknown error"}`, {
       cause: error,
     });
   }
